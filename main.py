@@ -17,7 +17,7 @@ import os
 #sns.set()
 #pd.set_option('display.max_rows', None)
 
-
+# Не заработает, если неправильно указать путь к csv-файлам
 PZ_dayahead_price = pd.read_csv("C:\\Users\Asus\Desktop\RU_Electricity_Market_PZ_dayahead_price_volume.csv")
 UES_dayahead_price = pd.read_csv("C:\\Users\Asus\Desktop\RU_Electricity_Market_UES_dayahead_price.csv")
 UES_intraday_price = pd.read_csv("C:\\Users\Asus\Desktop\RU_Electricity_Market_UES_intraday_price.csv")
@@ -40,6 +40,8 @@ UES_intraday_price = pd.read_csv("C:\\Users\Asus\Desktop\RU_Electricity_Market_U
 #data_details(PZ_dayahead_price)
 #data_details(UES_dayahead_price)
 #data_details(UES_intraday_price)
+
+
 # count = 0
 # count1 = 0
 # count2 = 0
@@ -58,28 +60,30 @@ UES_intraday_price = pd.read_csv("C:\\Users\Asus\Desktop\RU_Electricity_Market_U
 #     if i[1] == 0:
 #         print (i)
 
-def replace_vals(data):
-    data.reset_index(drop=True, inplace=True)
-    data["timestep"] = pd.to_datetime(data["timestep"])
-    data.drop("timestep", axis=1)
-    data.set_index("timestep", drop=True, inplace=True)
+#
 
-    # 2. replace all values between 0 & 50 with Nan
-
-    for item in data:
-        data[item] = data[item].mask(data[item] < 50, np.nan)
-
-    # 3. replace all NaN values by mean
-
-    data = data.fillna(data.mean(), inplace=True)
-    # data.drop("timestep", axis = 1)"""
-    return data
-
-
+# def replace_vals(data):
+#     data.reset_index(drop=True, inplace=True)
+#     data["timestep"] = pd.to_datetime(data["timestep"])
+#     data.drop("timestep", axis=1)
+#     data.set_index("timestep", drop=True, inplace=True)
+#
+#     # 2. replace all values between 0 & 50 with Nan
+#
+#     for item in data:
+#         data[item] = data[item].mask(data[item] < 50, np.nan)
+#
+#     # 3. replace all NaN values by mean
+#
+#     data = data.fillna(data.mean(), inplace=True)
+#     # data.drop("timestep", axis = 1)"""
+#     return data
+#
+# print(UES_intraday_price)
 # replace_vals(UES_intraday_price)
 # UES_intraday_price.head()
 # print(UES_intraday_price)
-#
+
 # replace_vals(PZ_dayahead_price)
 # PZ_dayahead_price.head()
 # print(PZ_dayahead_price)
@@ -88,9 +92,12 @@ def replace_vals(data):
 # UES_dayahead_price.head()
 # print(UES_dayahead_price)
 
+# всё, что до этого в основном считает нулевые значения и заменяет слишком маленькие  на средние, туту пробелма может быть в том, что
+# файлы могут не открыться
+
+# графики для PZ_dayahead_price
 
 PZ_dayahead_price.head()
-
 
 plt.figure(figsize = (29,15))
 
@@ -112,6 +119,7 @@ ax4.set_ylabel("price_sib")
 
 plt.show()
 
+#графики для UES_dayahead_price
 
 UES_dayahead_price.head()
 
@@ -144,8 +152,8 @@ ax4.set_ylabel("UES_South")
 
 plt.show()
 
+#графики для UES_intraday_price
 
-UES_intraday_price
 UES_intraday_price.head()
 
 plt.figure(figsize = (29,15))
